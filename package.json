@@ -1,0 +1,20 @@
+{
+  "name": "post-a-photo",
+  "version": "1.0.0",
+  "description": "post a photo application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Justin Bolsoy",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.8.4",
+    "body-parser": "^2.2.0",
+    "common-es": "^1.0.1",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "heic-convert": "^2.1.0",
+    "multer": "^1.4.5-lts.2"
+  }
+}

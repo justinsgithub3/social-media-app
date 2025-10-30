@@ -1,0 +1,144 @@
+/* Mobile-First CSS */
+body {
+    font-family: "Capriola", sans-serif;
+    background-color: #111111;
+    color: #FAF9F6;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  /* Header Styles */
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+.welcome {
+  margin: 15px;
+}
+
+  .header h1 {
+    color: #FAF9F6;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+  
+  img {
+    border: 5px solid #FAF9F6;
+    margin: 8px 0px;
+    border-radius: 4px;
+    box-shadow: 0 0 15px #dbe9f4;
+  }
+
+  /* Link Styles - NO UNDERLINES */
+  a {
+    text-decoration: none !important;
+  }
+  
+  /* Navigation Buttons */
+  .main-link,
+  .album-link,
+  .peel-link,
+  .camera-link {
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 8px;
+    background: #FAF9F6;
+    color: black;
+    border-radius: 6px;
+    box-shadow: 0 0 10px #dbe9f4;
+    text-align: center;
+    font-weight: 400;
+  }
+  
+  /* Camera Form Styles */
+  .post-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    gap: 15px;
+  }
+  
+  /* Emphasized Camera Button */
+  .camera-label {
+    display: inline-block;
+    padding: 16px 24px;
+    background: #dbe9f4;
+    color: black;
+    border-radius: 6px;
+    box-shadow: 0 0 15px #dbe9f4, 
+                0 0 25px rgba(219, 233, 244, 0.5);
+    text-align: center;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+  }
+  
+  /* Post Button */
+  #post-button {
+    padding: 14px 24px;
+    background: #FAF9F6;
+    color: black;
+    border-radius: 6px;
+    box-shadow: 0 0 10px #dbe9f4;
+    border: none;
+    font-family: "Capriola", sans-serif;
+    font-weight: 400;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s ease;
+  }
+  
+  /* Active/Hover States */
+  .camera-label:active,
+  #post-button:active {
+    transform: scale(0.98);
+  }
+  
+  .camera-label:active {
+    background: #c0d8eb;
+  }
+  
+  #post-button:active {
+    background: #e8e6e1;
+  }
+  
+  /* Hide file input but keep functional */
+  .camera {
+    display: none;
+  }
+  
+  .btn-danger {
+    top: 0px;
+    right: 0px;
+    width: 30px; 
+    height: 30px; 
+    padding: 0; 
+    border-radius: 50% ;
+    border: white;
+    color: grey;
+    background-color: white;
+  }
+  
+
+  /* Responsive Adjustments */
+  @media (min-width: 768px) {
+    .header {
+      flex-direction: row;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .post-form {
+      max-width: 400px;
+    }
+  }

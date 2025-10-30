@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Album</title>
+  <!DOCTYPE html>
+<html>
+
+<head>
+  <title>Album</title>
+  <link rel="icon" type="image/png" href="assets/blue-circle.png"/>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles/style1.css"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Capriola&display=swap');
+    </style>
+  </head>
+
+<body>
+  <div class="d-flex flex-column align-items-center">
+    <div class="header">
+      <h1 class="capriola-regular mb-3 mt-2">Album</h1>
+      <a class="main-link" href="/">Main</a>
+      <a class="camera-link border border-dark p-4 m-2" href="/camera">Camera</a>
+    </div>
+    
+      <div class="full-album row">
+        <% photos.reverse().forEach(function(photo) { %>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <img class="img-fluid" src="/images/<%= photo %>" alt="photo not displayed">
+          </div>
+        <% }); %>
+      </div>
+
+   
+    
+  </div>
+</body>
+
+</html>
