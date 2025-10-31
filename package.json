@@ -4,7 +4,9 @@
   "description": "post a photo application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.mjs",
+    "startTest": "node server.mjs"
   },
   "author": "Justin Bolsoy",
   "license": "ISC",

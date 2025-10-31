@@ -16,8 +16,6 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use(express.static(path.join(__dirname, 'public/images')));  //editeddd****
-//app.use('/styles', express.static(path.join(__dirname, 'styles')));
 
 //middleware to parse json request body
 app.use(express.json({limit:'50mb'})); 
@@ -82,7 +80,7 @@ app.post('/upload', upload.single('form-image'), (request, response) => {
 
 app.get('/album', (request, response) => {
 
-  const imagesDir = path.join(__dirname, 'public/images');      //editedd*******
+  const imagesDir = path.join(__dirname, 'public/images');      //edited*******
   fs.readdir(imagesDir, (err, files) => {
       if (err) {
           return console.log('Unable to read the images directory');
