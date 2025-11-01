@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "post a photo application",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node main.mjs",
@@ -12,6 +13,8 @@
   "author": "Justin Bolsoy",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.922.0",
+    "@aws-sdk/s3-request-presigner": "^3.922.0",
     "axios": "^1.8.4",
     "body-parser": "^2.2.0",
     "common-es": "^1.0.1",
