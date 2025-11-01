@@ -34,7 +34,7 @@ app.set('view engine', 'ejs');
 app.use('/api/images', images);
 
 // routes in this middlware regard general flow
-app.use('/displays', displays);
+app.use('/', displays);
 
 // initialize a port.
 app.listen(port, () => {
