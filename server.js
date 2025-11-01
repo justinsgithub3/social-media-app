@@ -34,7 +34,12 @@ app.set('view engine', 'ejs');
 app.use('/api/images', images);
 
 // routes in this middlware regard general flow
-app.use('/', displays);
+app.use('/displays', displays);
+
+// redirect this to make /displays the default
+app.get('/', (req, res) => {
+  res.redirect('/displays');
+});
 
 // initialize a port.
 app.listen(port, () => {

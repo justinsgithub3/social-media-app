@@ -1,5 +1,6 @@
-import { S3Client, ListObjectsV2Command, GetObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, ListObjectsV2Command, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+
 // assigning environment variables
 const ACCESS_KEY = process.env.ACCESS_KEY;
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -21,7 +22,6 @@ export async function getImage(id){
 // function returns object with .length with the number of images and .images with an array of images
 // if error occurs, an empty array will be returned
 export async function getAllImages(){
-  console.log('getAllImages called in s3Client!')
   try {
     // List all objects under 'nutrition/' prefix
     const listCommand = new ListObjectsV2Command({
@@ -61,5 +61,23 @@ export async function getAllImages(){
   catch (e) {
     console.log("Error: " + e);
     return [];
+  }
+}
+// imageBuf is a buffer of the image
+export async function postImage(imageBuf) {
+  console.log(imageBuf.buffer)
+
+
+  try {
+    await s3Client.send(new PutObjectCommand({
+      Bucket: BUCKET_NAME,
+      Key: 'nutrition/TestImage123haha.PNG',
+      Body: imageBuf.buffer,
+      ACL: 'public-read',
+      ContentType: 'image/png'
+    }));
+  } 
+  catch (e) {
+    console.log("Error: " + e);
   }
 }

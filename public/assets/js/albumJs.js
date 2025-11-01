@@ -1,6 +1,7 @@
 console.log("in js");
 
 let content = document.querySelector('.main-content');
+let mainAnchor = document.querySelector('#main-anchor');
 
 async function showAllImages() {
     try {
@@ -22,10 +23,6 @@ async function showAllImages() {
         console.log("Error: " + e);
     }
 }
-
-
-
-
 
 
 

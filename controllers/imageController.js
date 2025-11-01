@@ -1,5 +1,5 @@
 
-import { getAllImages } from '../services/s3Client.js';
+import { getAllImages, postImage } from '../services/s3Client.js';
 
 // get all images
 export const getImages = async (req, res, next) => {
@@ -14,6 +14,21 @@ export const getImages = async (req, res, next) => {
             .json({ msg: `No data found.`});
     }
 };
+
+export const createImage = async (req, res, next) => {
+    try {
+        const imageBuffer = req.file;
+        console.log(imageBuffer);
+        postImage(imageBuffer);
+    }
+    catch (e) {
+        return res
+            .status(500)
+            .json({ msg: `No data created.`});
+    }
+};
+
+
 
 
 
