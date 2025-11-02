@@ -1,6 +1,7 @@
 
-import { getAllImages, postImage } from '../services/s3Client.js';
-
+//import { getAllImages, postImage } from '../services/s3Client.js';
+import {getAllImages } from '../services/s3getAllImages.js';
+import { postImage } from '../services/s3postImage.js';
 // get all images
 export const getImages = async (req, res, next) => {
     console.log('getImages called in imageController!')
