@@ -67,13 +67,14 @@ export async function getAllImages(){
 export async function postImage(imageBuf) {
   console.log(imageBuf.buffer)
 
+  // create unique id with date time and math
+  const uniqueId = Date.now() + Math.random().toString(36);
 
   try {
     await s3Client.send(new PutObjectCommand({
       Bucket: BUCKET_NAME,
-      Key: 'nutrition/TestImage123haha.PNG',
+      Key: `nutrition/${uniqueId}_image.PNG`, // photo is overwriting itself************
       Body: imageBuf.buffer,
-      ACL: 'public-read',
       ContentType: 'image/png'
     }));
   } 
