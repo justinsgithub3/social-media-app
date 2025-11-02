@@ -10,7 +10,7 @@ async function showAllImages() {
         const numberOfImages = data.length; // number of images in array
         const imageUrl = data.images; // array of image urls
         // loop over each image url and add it to an img element in the content section
-        for (let i = 0; i < numberOfImages; i++) {
+        for (let i = 1; i < numberOfImages; i++) {
             let thisImage = imageUrl[i]; // specific image url to work with
             const imgEle = document.createElement('img');
             imgEle.setAttribute('id', i);
