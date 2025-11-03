@@ -16,6 +16,7 @@ async function showAllImages() {
             imgEle.setAttribute('id', i);
             imgEle.setAttribute('width', "10%");
             imgEle.setAttribute('src', thisImage);
+            imgEle.setAttribute('class', "image")
 
             content.appendChild(imgEle);
         };

@@ -1,0 +1,28 @@
+body {
+    width: 100vw;
+}
+
+h1 {
+    color: red;
+}
+
+.main-content {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+}
+
+.image {
+    width: 100px;
+
+    border-width: 2px;
+    border-color: blue;
+    border-style: solid;
+
+    margin: 5px;
+}
