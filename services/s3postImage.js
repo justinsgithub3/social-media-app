@@ -17,11 +17,8 @@ const s3Client = new S3Client({
 
 // imageBuf is a buffer of the image
 export async function postImage(imageBuf) {
-  console.log(imageBuf.buffer)
-
   // create unique id with date time and math
   const uniqueId = Date.now() + Math.random().toString(36);
-
   try {
     await s3Client.send(new PutObjectCommand({
       Bucket: BUCKET_NAME,

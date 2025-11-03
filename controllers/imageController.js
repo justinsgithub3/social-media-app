@@ -20,12 +20,15 @@ export const createImage = async (req, res, next) => {
     try {
         const imageBuffer = req.file;
         console.log(imageBuffer);
-        postImage(imageBuffer);
+        await postImage(imageBuffer);
     }
     catch (e) {
         return res
             .status(500)
             .json({ msg: `No data created.`});
+    } finally { // testing: 
+        // after posting imgage automatically redirect to album 
+        res.redirect('/displays');
     }
 };
 

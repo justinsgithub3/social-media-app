@@ -2,6 +2,13 @@ body {
     width: 100vw;
 }
 
+.header {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+    
+}
+
 h1 {
     color: red;
 }
@@ -21,7 +28,7 @@ h1 {
     width: 100px;
 
     border-width: 2px;
-    border-color: blue;
+    border-color: black;
     border-style: solid;
 
     margin: 5px;

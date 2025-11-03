@@ -1,0 +1,33 @@
+body {
+    width: 100vw;
+    text-align: center;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+    
+}
+
+.main-content {
+    border-width: 2px;
+    border-color: green;
+    border-style: solid;
+    text-align: center;
+    width: 50%;
+}
+
+.post-form {
+    border-width: 2px;
+    border-color: red;
+    border-style: solid;
+
+
+}
+
+.camera-label {
+    border-width: 2px;
+    border-color: blue;
+    border-style: solid;
+}
