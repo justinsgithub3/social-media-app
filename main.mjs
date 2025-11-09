@@ -85,7 +85,6 @@ app.get('/album', (request, response) => {
       if (err) {
           return console.log('Unable to read the images directory');
       }
-
       // Filter the files to include only image files
       const photos = files.filter(file => ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.svg', '.tiff', '.ico'].includes(path.extname(file).toLowerCase()));
 
