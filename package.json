@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node main.mjs",
     "startTest": "node server.mjs",
-    "dev": "node --watch --env-file=.env server.mjs"
+    "dev": "node --watch --env-file=.env server.js"
   },
   "author": "Justin Bolsoy",
   "license": "ISC",
