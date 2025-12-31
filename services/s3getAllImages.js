@@ -40,7 +40,7 @@ export async function getAllImages(){
           Bucket: BUCKET_NAME,
           Key: item.Key,
         });
-        const url = await getSignedUrl(s3Client, command, { expiresIn: 120 });
+        const url = await getSignedUrl(s3Client, command, { expiresIn: 1000 });
         return url;
       })
     );

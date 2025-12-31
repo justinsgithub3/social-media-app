@@ -7,27 +7,67 @@ body {
   display: flex;
   flex-direction: column;
   text-align: center;
-    
+  font-size: 30px;
 }
 
 .main-content {
+    display: flex;
+
+    /*
     border-width: 2px;
     border-color: green;
     border-style: solid;
+    */
+
     text-align: center;
-    width: 50%;
+    width: 100%;
+
+    height: 50vh;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
 }
 
 .post-form {
+    display: flex;
+
+    /*
     border-width: 2px;
     border-color: red;
     border-style: solid;
+    */
 
+    height: 100%;
+    width: 50%;
 
+    justify-content: center;
+    align-items: center;
 }
 
 .camera-label {
+
+    background-color: #F2F0EF;
+    display: flex;
+
     border-width: 2px;
     border-color: blue;
     border-style: solid;
+    
+    width: 100%;
+    height: 100%;
+
+    justify-content: center;
+    align-items: center;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+    transition: 0.3s;
+
+}
+
+#button-text {
+    font-size: 35px;
 }
