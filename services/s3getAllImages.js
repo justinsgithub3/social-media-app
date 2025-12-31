@@ -28,7 +28,8 @@ export async function getAllImages(){
 
     const listResponse = await s3Client.send(listCommand);
 
-    const objects = listResponse.Contents || [];
+    // this is reversed so the images are loaded from the most recent first
+    const objects = (listResponse.Contents || []).reverse();
 
     const selectedObjects = objects.slice(0);
     
@@ -39,7 +40,7 @@ export async function getAllImages(){
           Bucket: BUCKET_NAME,
           Key: item.Key,
         });
-        const url = await getSignedUrl(s3Client, command, { expiresIn: 60 });
+        const url = await getSignedUrl(s3Client, command, { expiresIn: 120 });
         return url;
       })
     );

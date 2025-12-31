@@ -4,7 +4,6 @@ import {getAllImages } from '../services/s3getAllImages.js';
 import { postImage } from '../services/s3postImage.js';
 // get all images
 export const getImages = async (req, res, next) => {
-    console.log('getImages called in imageController!')
     try {
         // service call to s3 bucket
         const data = await getAllImages(); // returns -> {# of images:# , images:[url, url, url]}

@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Configure multer to store uploaded files in a specific directory
 const storage = multer.diskStorage({
-  destination: './public/images/',                                        //editeedd*****
+  destination: './public/images/',                                 
   filename: (req, file, cb) => {
   //return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
     const extname = path.extname(file.originalname);

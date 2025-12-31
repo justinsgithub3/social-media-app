@@ -18,11 +18,13 @@ async function showAllImages() {
             imgEle.setAttribute('src', thisImage);
             imgEle.setAttribute('class', "image")
 
+            // only have 1 of the 2 block below execute!
+
             // adds image as last image
-            // content.appendChild(imgEle);
+            content.appendChild(imgEle);
 
             // adds image as first image
-            content.insertBefore(imgEle, content.firstChild);
+            //content.insertBefore(imgEle, content.firstChild);
         };
     } catch (e) {
         console.log("Error: " + e);
