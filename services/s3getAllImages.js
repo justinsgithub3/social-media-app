@@ -29,7 +29,9 @@ export async function getAllImages(){
     const listResponse = await s3Client.send(listCommand);
 
     // this is reversed so the images are loaded from the most recent first
-    const objects = (listResponse.Contents || []).reverse();
+    const objects = (listResponse.Contents || [])
+      .filter(item => item.Key !== "nutrition/") 
+      .reverse();
 
     const selectedObjects = objects.slice(0);
     
