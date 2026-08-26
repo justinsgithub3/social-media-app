@@ -1,7 +1,8 @@
 
 //import { getAllImages, postImage } from '../services/s3Client.js';
-import {getAllImages } from '../services/s3getAllImages.js';
+import { getAllImages } from '../services/s3getAllImages.js';
 import { postImage } from '../services/s3postImage.js';
+import { getUserImagesService } from '../services/getUserImages.js';
 // get all images
 export const getImages = async (req, res, next) => {
     try {
@@ -15,19 +16,46 @@ export const getImages = async (req, res, next) => {
     }
 };
 
+export const getUserImages = async (req, res, next) => {
+    try {
+        const userId = req.session?.userId || req.session?.user?.id;
+
+        if (!userId) {
+            return res.status(401).json({ msg: "Unauthorized. Please log in." });
+        }
+
+        const data = await getUserImagesService(userId);
+        
+        return res.status(200).json(data);
+
+    } catch (e) {
+        console.error("Error in getUserImages controller:", e);
+        return res.status(500).json({ msg: "Failed to retrieve user images." });
+    }
+}
+
 export const createImage = async (req, res, next) => {
     try {
+
+        const userId = req.session.userId;
+        if (!userId) {
+            return res.status(401).json({ error: "Unauthorized: Please log in." });
+        }
+
         const imageBuffer = req.file;
-        console.log(imageBuffer);
-        await postImage(imageBuffer);
+
+        await postImage(imageBuffer, userId);
+
+        return 
+            res.redirect('/display');
     }
     catch (e) {
         return res
             .status(500)
             .json({ msg: `No data created.`});
     } finally { // testing: 
-        // after posting imgage automatically redirect to album 
-        res.redirect('/displays');
+        // after posting image automatically redirect to album 
+        res.redirect('/display');
     }
 };
 

@@ -1,5 +1,6 @@
 import { S3Client, ListObjectsV2Command, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { getImageData } from "../database/imageQueries.js";
 
 // assigning environment variables
 const ACCESS_KEY = process.env.ACCESS_KEY;
@@ -20,6 +21,46 @@ const s3Client = new S3Client({
 // if error occurs, an empty array will be returned
 export async function getAllImages(){
   try {
+
+    console.log('fetching data from database...')
+    const rows = await getImageData();
+
+    const imageList = await Promise.all(
+      rows.map(async (row) => {
+        const command = new GetObjectCommand({
+          Bucket: BUCKET_NAME,
+          Key: row.s3_key,
+        });
+
+        const url = await getSignedUrl(s3Client, command, { expiresIn: 1000 });
+
+        return {
+          id: row.id,
+          url: url,
+          username: row.username
+        };
+      })
+    );
+
+    console.log("--- Fetched Images ---");
+    imageList.forEach((item) => {
+      console.log(`${item.username}, ${item.url.substring(0, 15)}`);
+    });
+    console.log("----------------------");
+
+    return {
+      length: imageList.length,
+      images: imageList
+    };
+
+  } catch (e) {
+    console.log("Error in getAllImages: " + e);
+    return { length: 0, images: [] };
+  }
+
+
+
+    /*
     // List all objects under 'nutrition/' prefix
     const listCommand = new ListObjectsV2Command({
       Bucket: BUCKET_NAME,
@@ -45,6 +86,7 @@ export async function getAllImages(){
         const url = await getSignedUrl(s3Client, command, { expiresIn: 1000 });
         return url;
       })
+        
     );
   
     // logging number of images
@@ -62,4 +104,5 @@ export async function getAllImages(){
     console.log("Error: " + e);
     return [];
   }
+    */
 }

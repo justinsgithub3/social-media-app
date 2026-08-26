@@ -1,9 +1,43 @@
-console.log("in js");
-
 let content = document.querySelector('.main-content');
 let mainAnchor = document.querySelector('#main-anchor');
+    const logoutBtn = document.querySelector('#logout-anchor');
 
 async function showAllImages() {
+    try {
+        const response = await fetch('/api/images/');
+        const data = await response.json();
+        const numberOfImages = data.images.length;
+        const imageList = data.images; // Array of { id, url, username } objects
+
+        content.innerHTML = ''; // Clear previous elements
+
+        for (let i = 0; i < numberOfImages; i++) {
+            let thisImage = imageList[i]; 
+
+            // Card container
+            const container = document.createElement('div');
+
+            // Image element
+            const imgEle = document.createElement('img');
+            imgEle.setAttribute('id', thisImage.id || i);
+            imgEle.setAttribute('width', "10%");
+            imgEle.setAttribute('src', thisImage.url); // Use .url here!
+            imgEle.setAttribute('class', "image");
+
+            // Username display
+            const userEl = document.createElement('p');
+            userEl.innerText = `${thisImage.username}`;
+
+            container.appendChild(imgEle);
+            container.appendChild(userEl);
+            content.appendChild(container);
+        }
+    } catch (e) {
+        console.log("Error: " + e);
+    }
+
+
+    /*
     try {
         const response = await fetch('/api/images/');
         const data = await response.json();
@@ -29,11 +63,14 @@ async function showAllImages() {
     } catch (e) {
         console.log("Error: " + e);
     }
+    */
 }
 
-
-
-
+async function handleLogout(e) {
+    e.preventDefault();
+    
+    sessionStorage.clear(); 
+}
 
 async function showPosts() {
     
@@ -193,9 +230,11 @@ async function saveEdit(e) {
     }
 }
 
-
-
 document.addEventListener("DOMContentLoaded", async () => {
     // initial render goes to album
     showAllImages();
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', handleLogout);
+    }
 });
