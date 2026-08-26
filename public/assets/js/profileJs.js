@@ -29,7 +29,6 @@ async function showUserImages() {
             imgEle.setAttribute('class', "image");
 
             const userEl = document.createElement('p');
-            userEl.innerText = `${thisImage.username}`;
 
             container.appendChild(imgEle);
             container.appendChild(userEl);

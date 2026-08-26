@@ -18,6 +18,12 @@ export const getAlbumDisplay = async (req, res, next) => {
 };
 export const getCameraDisplay = async (req, res, next) => {
     try {
+        const userId = req.session?.userId || req.session?.user?.id;
+        if (!userId) {
+            return res.redirect('/display/login');
+        }
+
+
         res.sendFile(path.join(__dirname, '..', 'public', 'views', 'camera.html'));
     } catch (e) {
         return res
