@@ -28,3 +28,10 @@ export const createComment = async (imageId, userId, comment) => {
     );
     return result.insertId;
 };
+
+export const deleteComment = async (userId) => { 
+    const [result] = await pool.query(
+        `DELETE FROM comments WHERE id = ?`, [userId]
+    );
+    return result;
+};

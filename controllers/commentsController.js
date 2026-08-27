@@ -1,4 +1,4 @@
-import { getAllComments, createComment } from "../database/commentsQueries.js";
+import { getAllComments, createComment, deleteComment } from "../database/commentsQueries.js";
 
 export const getComments = async (req, res) => {
     try {
@@ -10,6 +10,18 @@ export const getComments = async (req, res) => {
         res.status(500).json({ error: 'Failed to retrieve comments' });
     }
 };
+
+export const removeComment = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await deleteComment(id);
+        return res.status(200).json({ message: 'Deleted successfully', result });
+    } catch (error) {
+        console.error('Error fetching comments:', error);
+        res.status(500).json({ error: 'Failed to retrieve comments' });
+    }
+};
+
 
 export const addComment = async (req, res) => {
     try {
