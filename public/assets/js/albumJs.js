@@ -1,10 +1,10 @@
 let content = document.querySelector('.main-content');
 let mainAnchor = document.querySelector('#main-anchor');
-    const logoutBtn = document.querySelector('#logout-anchor');
+const logoutBtn = document.querySelector('#logout-anchor');
 
 async function showAllImages() {
     try {
-        // Fetch both images and comments concurrently
+        // Fetch images and comments concurrently
         const [imagesRes, commentsRes] = await Promise.all([
             fetch('/api/images/'),
             fetch('/api/comments/')
@@ -13,20 +13,20 @@ async function showAllImages() {
         const imagesData = await imagesRes.json();
         const commentsData = await commentsRes.json();
 
-        const imageList = imagesData.images;
+        const imageList = imagesData.images || [];
         const allComments = commentsData.comments || [];
 
         content.innerHTML = ''; 
 
         for (let i = 0; i < imageList.length; i++) {
-            let thisImage = imageList[i]; 
+            const thisImage = imageList[i]; 
 
             const container = document.createElement('div');
             container.classList.add('image-card');
 
             const userEl = document.createElement('p');
             userEl.classList.add('username');
-            userEl.innerText = thisImage.username;
+            userEl.textContent = thisImage.username;
 
             const imgEle = document.createElement('img');
             imgEle.setAttribute('id', thisImage.id || i);
@@ -40,13 +40,15 @@ async function showAllImages() {
             const commentsList = document.createElement('div');
             commentsList.classList.add('comments-list');
 
-            // Filter comments for this specific image
-            const imageComments = allComments.filter(c => c.image_id === thisImage.id);
+            // Filter comments belonging to this image
+            const imageComments = allComments.filter(
+                c => c.image_id === thisImage.id || c.imageId === thisImage.id
+            );
             
             imageComments.forEach(c => {
                 const commentEl = document.createElement('p');
                 commentEl.classList.add('comment-item');
-                commentEl.innerHTML = `<strong>${c.username}:</strong> ${c.comment}`;
+                commentEl.textContent = `${c.username || 'User'}: ${c.comment}`;
                 commentsList.appendChild(commentEl);
             });
 
@@ -65,22 +67,35 @@ async function showAllImages() {
                 
                 if (!commentText) return;
 
+                // 1. Fetch current user from localStorage
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
                 try {
-                    const res = await fetch('/api/comments', {
+                    // 2. Post comment using dynamic logged-in user ID
+                    const res = await fetch(`/api/comments/${thisImage.id}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            image_id: thisImage.id,
                             comment: commentText
                         })
                     });
 
                     if (res.ok) {
+                        const data = await res.json();
+
+                        // 1. Create the new comment element
                         const newComment = document.createElement('p');
                         newComment.classList.add('comment-item');
-                        newComment.innerHTML = `<strong>You:</strong> ${commentText}`;
+
+                        // 2. Use the username returned from server (or fallback to 'You')
+                        const displayUser = data.comment?.username || 'You';
+                        newComment.textContent = `${displayUser}: ${commentText}`;
+
+                        // 3. Append to DOM and clear input field
                         commentsList.appendChild(newComment);
                         input.value = '';
+                    } else {
+                        console.error('Failed to save comment on server.');
                     }
                 } catch (err) {
                     console.error('Failed to post comment:', err);
@@ -97,7 +112,7 @@ async function showAllImages() {
             content.appendChild(container);
         }
     } catch (e) {
-        console.log("Error: " + e);
+        console.error("Error loading images:", e);
     }
     /*
     try {

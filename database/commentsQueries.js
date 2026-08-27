@@ -21,7 +21,6 @@ export const getAllComments = async (imageId) => {
     return rows;
 }
 
-// *************************** didint to this
 export const createComment = async (imageId, userId, comment) => {
     const [result] = await pool.query(
         `INSERT INTO comments (image_id, user_id, comment) VALUES (?, ?, ?)`,
