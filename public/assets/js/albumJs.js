@@ -7,36 +7,97 @@ async function showAllImages() {
         const response = await fetch('/api/images/');
         const data = await response.json();
         const numberOfImages = data.images.length;
-        const imageList = data.images; // Array of { id, url, username } objects
+        const imageList = data.images; 
 
-        content.innerHTML = ''; // Clear previous elements
+        content.innerHTML = '';
 
         for (let i = 0; i < numberOfImages; i++) {
             let thisImage = imageList[i]; 
 
             // Card container
             const container = document.createElement('div');
+            container.classList.add('image-card');
 
-            // Image element
+            // Username header
+            const userEl = document.createElement('p');
+            userEl.classList.add('username');
+            userEl.innerText = thisImage.username;
+
+            // Image
             const imgEle = document.createElement('img');
             imgEle.setAttribute('id', thisImage.id || i);
-            imgEle.setAttribute('width', "10%");
-            imgEle.setAttribute('src', thisImage.url); // Use .url here!
+            imgEle.setAttribute('src', thisImage.url);
             imgEle.setAttribute('class', "image");
 
-            // Username display
-            const userEl = document.createElement('p');
-            userEl.innerText = `${thisImage.username}`;
+            // --- Comments Section ---
+            const commentsSection = document.createElement('div');
+            commentsSection.classList.add('comments-section');
 
-            container.appendChild(imgEle);
+            // List container to render existing comments
+            const commentsList = document.createElement('div');
+            commentsList.classList.add('comments-list');
+            
+            // Loop through existing comments if backend provides them
+            if (thisImage.comments && Array.isArray(thisImage.comments)) {
+                thisImage.comments.forEach(c => {
+                    const commentEl = document.createElement('p');
+                    commentEl.classList.add('comment-item');
+                    commentEl.innerHTML = `<strong>${c.username}:</strong> ${c.comment}`;
+                    commentsList.appendChild(commentEl);
+                });
+            }
+
+            // Comment Input Form
+            const commentForm = document.createElement('form');
+            commentForm.classList.add('comment-form');
+            commentForm.innerHTML = `
+                <input type="text" placeholder="Add a comment..." required class="comment-input" />
+                <button type="submit" class="comment-btn">Post</button>
+            `;
+
+            // Handle Comment Submission
+            commentForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const input = commentForm.querySelector('.comment-input');
+                const commentText = input.value.trim();
+                
+                if (!commentText) return;
+
+                try {
+                    const res = await fetch('/api/comments', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            image_id: thisImage.id,
+                            comment: commentText
+                        })
+                    });
+
+                    if (res.ok) {
+                        const newComment = document.createElement('p');
+                        newComment.classList.add('comment-item');
+                        newComment.innerHTML = `<strong>You:</strong> ${commentText}`;
+                        commentsList.appendChild(newComment);
+                        input.value = '';
+                    }
+                } catch (err) {
+                    console.error('Failed to post comment:', err);
+                }
+            });
+
+            // Build hierarchy
+            commentsSection.appendChild(commentsList);
+            commentsSection.appendChild(commentForm);
+
             container.appendChild(userEl);
+            container.appendChild(imgEle);
+            container.appendChild(commentsSection);
+            
             content.appendChild(container);
         }
     } catch (e) {
         console.log("Error: " + e);
     }
-
-
     /*
     try {
         const response = await fetch('/api/images/');
