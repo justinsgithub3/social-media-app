@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import logger from './middleware/logger.mjs';
 import session from 'express-session';
 import images from './routes/images.js';
+import comments from './routes/comments.js';
 import display from './routes/display.js';
 import authentication from './routes/authentication.js';
 
@@ -52,6 +53,8 @@ app.set('view engine', 'ejs');
 // middleware for routing to access the s3 bucket
 // routes in this middlware regard creating, reading, updating, and deleting images.
 app.use('/api/images', images);
+
+app.use('/api/comments', comments);
 
 // routes in this middlware regard general flow
 app.use('/display', display);

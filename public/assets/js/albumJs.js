@@ -4,26 +4,30 @@ let mainAnchor = document.querySelector('#main-anchor');
 
 async function showAllImages() {
     try {
-        const response = await fetch('/api/images/');
-        const data = await response.json();
-        const numberOfImages = data.images.length;
-        const imageList = data.images; 
+        // Fetch both images and comments concurrently
+        const [imagesRes, commentsRes] = await Promise.all([
+            fetch('/api/images/'),
+            fetch('/api/comments/')
+        ]);
 
-        content.innerHTML = '';
+        const imagesData = await imagesRes.json();
+        const commentsData = await commentsRes.json();
 
-        for (let i = 0; i < numberOfImages; i++) {
+        const imageList = imagesData.images;
+        const allComments = commentsData.comments || [];
+
+        content.innerHTML = ''; 
+
+        for (let i = 0; i < imageList.length; i++) {
             let thisImage = imageList[i]; 
 
-            // Card container
             const container = document.createElement('div');
             container.classList.add('image-card');
 
-            // Username header
             const userEl = document.createElement('p');
             userEl.classList.add('username');
             userEl.innerText = thisImage.username;
 
-            // Image
             const imgEle = document.createElement('img');
             imgEle.setAttribute('id', thisImage.id || i);
             imgEle.setAttribute('src', thisImage.url);
@@ -33,21 +37,20 @@ async function showAllImages() {
             const commentsSection = document.createElement('div');
             commentsSection.classList.add('comments-section');
 
-            // List container to render existing comments
             const commentsList = document.createElement('div');
             commentsList.classList.add('comments-list');
-            
-            // Loop through existing comments if backend provides them
-            if (thisImage.comments && Array.isArray(thisImage.comments)) {
-                thisImage.comments.forEach(c => {
-                    const commentEl = document.createElement('p');
-                    commentEl.classList.add('comment-item');
-                    commentEl.innerHTML = `<strong>${c.username}:</strong> ${c.comment}`;
-                    commentsList.appendChild(commentEl);
-                });
-            }
 
-            // Comment Input Form
+            // Filter comments for this specific image
+            const imageComments = allComments.filter(c => c.image_id === thisImage.id);
+            
+            imageComments.forEach(c => {
+                const commentEl = document.createElement('p');
+                commentEl.classList.add('comment-item');
+                commentEl.innerHTML = `<strong>${c.username}:</strong> ${c.comment}`;
+                commentsList.appendChild(commentEl);
+            });
+
+            // Comment input form
             const commentForm = document.createElement('form');
             commentForm.classList.add('comment-form');
             commentForm.innerHTML = `
@@ -55,7 +58,6 @@ async function showAllImages() {
                 <button type="submit" class="comment-btn">Post</button>
             `;
 
-            // Handle Comment Submission
             commentForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const input = commentForm.querySelector('.comment-input');
@@ -85,7 +87,6 @@ async function showAllImages() {
                 }
             });
 
-            // Build hierarchy
             commentsSection.appendChild(commentsList);
             commentsSection.appendChild(commentForm);
 
