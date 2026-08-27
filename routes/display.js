@@ -8,6 +8,7 @@ router.get('/', getAlbumDisplay);
 router.get('/camera', getCameraDisplay);
 router.get('/create', getCreatePage);
 router.get('/login', getLoginPage);
-router.get('/profile', getProfilePage)
+router.get('/profile', getProfilePage);
+router.get('/profile/:username', getProfilePage);
 
 export default router;

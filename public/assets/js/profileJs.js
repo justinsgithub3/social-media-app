@@ -1,6 +1,9 @@
 const content = document.querySelector('.main-content');
 const greetingHeader = document.getElementById('user-greeting');
 
+const modal = document.getElementById('image-modal');
+const modalImg = document.getElementById('modal-img');
+
 async function showUserImages() {
     try {
         const response = await fetch('/api/images/user-images');
@@ -24,14 +27,18 @@ async function showUserImages() {
 
             const imgEle = document.createElement('img');
             imgEle.setAttribute('id', thisImage.id);
-            imgEle.setAttribute('width', "10%");
             imgEle.setAttribute('src', thisImage.url);
             imgEle.setAttribute('class', "image");
 
-            const userEl = document.createElement('p');
+            // Open modal on image click
+            imgEle.addEventListener('click', () => {
+                if (modal && modalImg) {
+                    modalImg.src = thisImage.url;
+                    modal.classList.add('open');
+                }
+            });
 
             container.appendChild(imgEle);
-            container.appendChild(userEl);
             content.appendChild(container);
         });
     } catch (e) {
@@ -39,4 +46,13 @@ async function showUserImages() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", showUserImages);
+document.addEventListener("DOMContentLoaded", () => {
+    showUserImages();
+
+    // Close modal when clicking anywhere on the overlay
+    if (modal) {
+        modal.addEventListener('click', () => {
+            modal.classList.remove('open');
+        });
+    }
+});

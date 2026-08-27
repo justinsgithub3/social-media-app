@@ -1,0 +1,44 @@
+/* Grid layout for profile content */
+.main-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  align-items: start; /* Prevents taller images from stretching neighboring grid cells */
+}
+
+/* Allow images to keep their original proportions */
+.main-content .image-card {
+  width: 100%;
+}
+
+.main-content img {
+  width: 100%;
+  height: auto; /* Preserves natural aspect ratio */
+  display: block;
+  cursor: pointer;
+}
+
+/* Fullscreen Modal Styling */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+}
+
+/* Show modal when active */
+.modal.open {
+  display: flex;
+}
