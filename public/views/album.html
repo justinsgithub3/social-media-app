@@ -23,10 +23,12 @@
         </div>
     </header>
 
-    <form id="user-search-form" class="search-container">
-        <input type="text" id="user-search-input" placeholder="Search user..." required />
-        <button type="submit" id="user-search-btn">Search for a profile</button>
+    <form id="user-search-form" class="search-container" style="position: relative;">
+        <input type="text" id="user-search-input" placeholder="Search user..." autocomplete="off" required />
+        <button type="submit" id="user-search-btn">Search</button>
+        <div id="username-dropdown" class="dropdown-list"></div>
     </form>
+
     <div class="main-content"></div>
 
     <script type="module" src="/assets/js/albumJs.js"></script>
