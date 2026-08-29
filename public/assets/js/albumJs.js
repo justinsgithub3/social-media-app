@@ -81,7 +81,8 @@ async function showAllImages() {
             const userLink = document.createElement('a');
             userLink.classList.add('username-link');
             userLink.textContent = thisImage.username || '';
-            userLink.href = `/display/profile?user=${encodeURIComponent(thisImage.username)}`;            userEl.appendChild(userLink);
+            userLink.href = `/display/profile?user=${encodeURIComponent(thisImage.username)}`;
+            userEl.appendChild(userLink);
 
             const imgEle = document.createElement('img');
             imgEle.setAttribute('id', thisImage.id || i);
@@ -175,11 +176,35 @@ async function handleLogout(e) {
     localStorage.clear();
 
     window.location.href = '/verify/logout';
-
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
     showAllImages();
+
+const searchForm = document.querySelector('#user-search-form');
+    if (searchForm) {
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Read session state
+            const rawUsername = sessionStorage.getItem('username');
+            const currentUsername = (rawUsername && rawUsername !== 'undefined' && rawUsername !== 'null') ? rawUsername.trim() : null;
+
+            // Check if user is logged in before allowing search
+            if (!currentUsername) {
+                alert("You need to be logged in to access search.");
+                window.location.href = '/display/login'; 
+                return;
+            }
+
+            const input = document.querySelector('#user-search-input');
+            const targetUsername = input ? input.value.trim() : '';
+            
+            if (targetUsername) {
+                window.location.href = `/display/profile?user=${encodeURIComponent(targetUsername)}`;
+            }
+        });
+    }
 
     const logoutBtn = document.querySelector('#logout-anchor');
     if (logoutBtn) {
