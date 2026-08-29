@@ -1,5 +1,5 @@
 import express from 'express';
-import { getImages, getUserImages, createImage } from '../controllers/imageController.js'
+import { getImages, getUserImages, getImagesByUsername, createImage } from '../controllers/imageController.js'
 import multer from 'multer';
 
 // Choose storage type
@@ -11,6 +11,7 @@ const router = express.Router();
 // GET all images
 router.get('/', getImages);
 router.get('/user-images', getUserImages);
+router.get('/user/:username', getImagesByUsername);
 
 // POST new image to s3 bucket
 router.post('/', upload.single('form-image'), createImage);

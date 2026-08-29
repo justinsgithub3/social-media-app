@@ -32,4 +32,20 @@ export const getImageDataByUserId = async (userId) => {
   `, [userId]);
 
   return rows;
-}
+};
+
+export const getImageDataByUsername = async (username) => {
+  const [rows] = await pool.query(`
+  SELECT 
+    images.id, 
+    images.s3_key, 
+    images.created_at,
+    users.username
+  FROM images
+  JOIN users ON images.user_id = users.id
+  WHERE LOWER(users.username) = LOWER(?)
+  ORDER BY images.created_at DESC;
+  `, [username]);
+
+  return rows;
+};

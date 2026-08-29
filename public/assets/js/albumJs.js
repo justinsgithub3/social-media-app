@@ -51,7 +51,7 @@ async function showAllImages() {
         if (currentUsername) {
             greetingHeader.textContent = `- ${currentUsername}`;
         } else {
-            greetingHeader.textContent = '';
+            greetingHeader.textContent = '- not logged in';
         }
     }
 
@@ -77,7 +77,11 @@ async function showAllImages() {
 
             const userEl = document.createElement('p');
             userEl.classList.add('username');
-            userEl.textContent = thisImage.username || '';
+
+            const userLink = document.createElement('a');
+            userLink.classList.add('username-link');
+            userLink.textContent = thisImage.username || '';
+            userLink.href = `/display/profile?user=${encodeURIComponent(thisImage.username)}`;            userEl.appendChild(userLink);
 
             const imgEle = document.createElement('img');
             imgEle.setAttribute('id', thisImage.id || i);
